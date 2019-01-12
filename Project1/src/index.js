@@ -16,7 +16,7 @@ function getButtonText() {
 };
 
 function getLabelText() {
-    return 'Enter Name asdf: ';
+    return 'Enter Name: ';
 }
 
 const App = () => {
