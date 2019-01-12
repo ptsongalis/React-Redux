@@ -9,18 +9,21 @@ class App extends React.Component
     {
         super(props); //must call the super with props passed in
 
-        this.state = { lat: null, long: null };
+        //this is the only time we do direct assignment to this.state
+        this.state = { lat: null, long: null }; 
+
+        window.navigator.geolocation.getCurrentPosition(
+            (position) => {
+                this.setState({lat: position.coords.latitude, long: position.coords.longitude});
+            },
+            (err) => console.log(err)
+        );
     }
 
 
     render() //we must define the render method
     {
-        window.navigator.geolocation.getCurrentPosition(
-            (position) => console.log(position),
-            (err) => console.log(err)
-        );
-
-        return <div>Latitude:</div>
+        return <div>Latitude: {this.state.lat} Longitude: {this.state.long}</div>
     }
 
 }
