@@ -30,22 +30,31 @@ class App extends React.Component
         console.log('my component just updated - it rerendered');
     }
 
+    renderContent() {
+        if (this.state.errorMessage && !this.state.lat)
+        {
+            return <div>Error: {this.state.errorMessage}</div>
+        }
+
+        if(!this.state.errorMessage && this.state.lat)
+        {
+            return <SeasonDisplay lat={this.state.lat}/> 
+        }
+
+        return <Spinner message="Please accept location request"/>
+    }
+
     //render is called once when the app starts and 
     //every time the state is modified
     //RENDER METHOD SHOULD ONLY RETURN JSX
     render() //we must define the render method
     {
-            if (this.state.errorMessage && !this.state.lat)
-            {
-                return <div>Error: {this.state.errorMessage}</div>
-            }
-
-            if(!this.state.errorMessage && this.state.lat)
-            {
-                return <SeasonDisplay lat={this.state.lat}/> 
-            }
-
-            return <Spinner message="Please accept location request"/>
+           return (
+               //wrap our conditional content in static stuff that needs to be there all the time
+                <div>
+                    {this.renderContent()}
+                </div>
+           )
     }
 
 }
