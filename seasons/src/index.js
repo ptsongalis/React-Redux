@@ -1,42 +1,38 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import SeasonDisplay from './SeasonDisplay';
 
 
 class App extends React.Component 
 {
-    
-    constructor(props)
+    //can initialize state this way
+    //same as using constructor and initializing state
+    //babel builds constructor for us
+    state = {lat: null, errorMessage: ''};
+
+    //best practices say to do data loading in componentDidMount
+    //dont do it in the constructor
+    componentDidMount() 
     {
-        super(props); //must call the super with props passed in
+        console.log('my component was rendered to the screen');
 
-        //this is the only time we do direct assignment to this.state
-        this.state = { lat: null, long: null, errorMessage: '' }; 
-
+        //get user current position
         window.navigator.geolocation.getCurrentPosition(
-            (position) => {
-                this.setState(
-                    {lat: position.coords.latitude, 
-                        long: position.coords.longitude
-                    });
-            },
-            (err) => {
-                this.setState({errorMessage: err.message});
-            }
+            (position) => 
+                this.setState({lat: position.coords.latitude, long: position.coords.longitude}),
+            (err) => this.setState({errorMessage: err.message})
         );
     }
-
-    componentDidMount()
+    
+    //runs every time component updates, can do more data loading here based on state change
+    componentDidUpdate() 
     {
-        console.log('my component was rendered');
-    }
-
-    componentDidUpdate()
-    {
-        console.log('my component just updated');
+        console.log('my component just updated - it rerendered');
     }
 
     //render is called once when the app starts and 
     //every time the state is modified
+    //RENDER METHOD SHOULD ONLY RETURN JSX
     render() //we must define the render method
     {
             if (this.state.errorMessage && !this.state.lat)
@@ -46,7 +42,7 @@ class App extends React.Component
 
             if(!this.state.errorMessage && this.state.lat)
             {
-                return <div>Latitude: {this.state.lat}</div>
+                return <SeasonDisplay lat={this.state.lat}/> 
             }
 
             return <div>Loading...</div>
