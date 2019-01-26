@@ -20,6 +20,7 @@ const getSeason = (lat, month) => {
         return lat > 0 ? 'winter' : 'summer';
 }
 
+//component goes at the bottom and helper functions and config go above it
 const SeasonDisplay = (props) => {
     const season = getSeason(props.lat, new Date().getMonth());
     const{text, iconName} = seasonConfig[season] // {text, iconName}
