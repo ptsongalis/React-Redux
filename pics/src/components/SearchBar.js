@@ -3,6 +3,13 @@ import React from 'react';
 class SearchBar extends React.Component {
     state = { term: '' };
 
+
+    onFormSubmit = (event) => { //use an arrow function to bind "this" to the class object
+        event.preventDefault();
+
+        this.props.onSubmit(this.state.term);
+    }
+
     //leave parentheses off "onInputChange" to call at some time in the future
     //with parentheses the function will be called every time render() is called
 
@@ -16,7 +23,7 @@ class SearchBar extends React.Component {
     render() {
         return (
             <div className="ui segment">
-                <form className="ui form">
+                <form onSubmit={this.onFormSubmit} className="ui form">
                     <div className="field">
                         <label>Image Search</label>
                         <input
