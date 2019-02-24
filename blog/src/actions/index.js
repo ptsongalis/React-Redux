@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 //ACTION CREATORS
 
 import jsonPlaceholder from "../apis/jsonPlaceholder";
@@ -15,3 +17,18 @@ export const fetchPosts = () => {
 //     const response = await jsonPlaceholder.get('/posts');
 //     dispatch({type: 'FETCH_POSTS', payload: response});
 // };
+
+//original code without memoize
+// export const fetchUser = id => {
+//   return async function(dispatch, getState) {
+//     const response = await jsonPlaceholder.get("/users/" + id);
+//     dispatch({ type: "FETCH_USER", payload: response.data });
+//   };
+// };
+
+export const fetchUser = function(id) {
+  return async function(dispatch, getState) {
+    const response = await jsonPlaceholder.get("/users/" + id);
+    dispatch({ type: "FETCH_USER", payload: response.data });
+  };
+};
